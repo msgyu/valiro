@@ -1,10 +1,10 @@
-package main
+package valiro
 
 import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/msgyu/golang-validation/field_error_map"
+	"github.com/msgyu/valiro/field_error_map"
 )
 
 type User struct {

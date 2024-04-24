@@ -21,9 +21,11 @@ func CreateFieldErrorMap(err error) FieldErrorMap {
 	var validationErrors validator.ValidationErrors
 	if errors.As(err, &validationErrors) {
 		for _, fieldError := range validationErrors {
-			field := fieldError.Field()
+			// フィールド名を取得
+			// RegisterTagNameFuncによって、名前を取得する。JSONタグ名を取得するように設定されている。
+			fieldName := fieldError.Field()
 			message := CreateErrorMessage(fieldError)
-			errorMessages[field] = append(errorMessages[field], message)
+			errorMessages[fieldName] = append(errorMessages[fieldName], message)
 		}
 	}
 

@@ -1,11 +1,11 @@
-package main
+package valiro
 
 import (
 	"reflect"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/msgyu/golang-validation/field_error_map"
+	"github.com/msgyu/valiro/field_error_map"
 )
 
 var validater *validator.Validate

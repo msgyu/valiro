@@ -1,4 +1,4 @@
-module github.com/msgyu/golang-validation
+module github.com/msgyu/valiro
 
 go 1.21.0
 

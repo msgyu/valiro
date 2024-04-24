@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/msgyu/golang-validation/interceptor"
+	"github.com/msgyu/valiro"
 )
 
 type User struct {
@@ -14,8 +14,8 @@ type User struct {
 	Repeat   int    `json:"repeat" validate:"eqfield=Age" label:"年齢の確認"`
 }
 
-func main() {
-	interceptor.Init()
+func example() {
+	valiro.Init()
 
 	user := User{
 		Username: "12333333333333333333333333333",
@@ -23,10 +23,10 @@ func main() {
 		Email:    "11111111111111111111",
 		Repeat:   25,
 	}
-	err := interceptor.Validate(user)
-	if err != nil {
-		mapError := interceptor.CreateFieldErrorMap(err)
-		m, err := json.Marshal(mapError)
+
+	validateErrMap := valiro.Validate(user)
+	if len(validateErrMap) > 0 {
+		m, err := json.Marshal(validateErrMap)
 		if err != nil {
 			fmt.Println(err)
 			return
