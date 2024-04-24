@@ -14,7 +14,7 @@ func Init() {
 	validater = validator.New()
 	// タグのlabelを使ってフィールド名を登録
 	// RegisterTagNameFunc は、StructFields の代替名を取得する関数を登録する。
-	// 例えば、通常の Go フィールド名ではなく、構造体の JSON 表現に指定された名前を使用する場合などです：
+	// これにより、バリデーションエラーメッセージにおいて、構造体フィールドの JSON タグの名前を使用することができます。
 	validater.RegisterTagNameFunc(func(fld reflect.StructField) string {
 		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
 		if name == "-" {
@@ -25,11 +25,11 @@ func Init() {
 }
 
 // Validate関数をジェネリクスを使って定義
-func Validate[T any](v T) (field_error_map.FieldErrorMap, error) {
+func Validate[T any](v T) field_error_map.FieldErrorMap {
 	var validateErrMap field_error_map.FieldErrorMap
-	err := validater.Struct(v)
-	if err != nil {
-		validateErrMap = field_error_map.CreateFieldErrorMap(err)
+	validateErr := validater.Struct(v)
+	if validateErr != nil {
+		validateErrMap = field_error_map.CreateFieldErrorMap(validateErr)
 	}
-	return validateErrMap, err
+	return validateErrMap
 }
